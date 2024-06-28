@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:free_scroll_compat/sliver_compat.dart';
+import 'package:free_scroll_compat/multi_sliver_compat/sliver_compat.dart';
 import 'package:free_scroll_compat/sliver_persistent_header_delegate.dart';
 
 import 'fragments.dart';

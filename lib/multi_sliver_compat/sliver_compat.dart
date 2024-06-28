@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:free_scroll_compat/multi_sliver_compat/shame_scroll_controller.dart';
 
 typedef SliverCompatBuilder = Function(BuildContext, SliverCompat);
 
@@ -37,12 +38,13 @@ class _MultiSliverCompatWidgetState extends State<MultiSliverCompatWidget> {
 }
 
 class SliverCompat {
-  ScrollController? _majorScrollController;
+  ShameScrollController? _majorScrollController;
 
-  final HashMap<Key, ScrollController> _scrollPool = HashMap();
+  final HashMap<Key, ShameScrollController> _scrollPool = HashMap();
 
   ScrollController generateMajorController() {
-    _majorScrollController ??= ScrollController();
+    _majorScrollController ??=
+        ShameScrollController(this, debugKey: const Key("Major"));
     return _majorScrollController!;
   }
 
@@ -50,7 +52,8 @@ class SliverCompat {
     if (_scrollPool[tag] != null) {
       return _scrollPool[tag]!;
     }
-    ScrollController newController = ScrollController();
+    ShameScrollController newController =
+        ShameScrollController(this, debugKey: tag);
     _scrollPool[tag] = newController;
     return newController;
   }
