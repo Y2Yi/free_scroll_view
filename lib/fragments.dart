@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:free_scroll_compat/sliver_compat.dart';
 
 class StoreFragment extends StatelessWidget {
   const StoreFragment({super.key});
@@ -24,7 +25,15 @@ class GoodsFragment extends StatelessWidget {
         Expanded(
           flex: 1,
           child: ListView(
+            controller: MultiSliverCompatDelegate.ofNotNull(context)
+                .generateMinorController(tag: const Key("goods_type_list")),
             children: [
+              _buildMenu(64),
+              _buildMenu(64),
+              _buildMenu(64),
+              _buildMenu(64),
+              _buildMenu(64),
+              _buildMenu(64),
               _buildMenu(64),
               _buildMenu(64),
               _buildMenu(64),
@@ -37,6 +46,8 @@ class GoodsFragment extends StatelessWidget {
         Expanded(
           flex: 3,
           child: ListView(
+            controller: MultiSliverCompatDelegate.ofNotNull(context)
+                .generateMinorController(tag: const Key("goods_detail_list")),
             children: [
               _buildMenu(96),
               _buildMenu(96),

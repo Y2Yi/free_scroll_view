@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:free_scroll_compat/sliver_compat.dart';
 import 'package:free_scroll_compat/sliver_persistent_header_delegate.dart';
 
 import 'fragments.dart';
@@ -39,53 +40,56 @@ class _SliverCompatBizWidgetState extends State<SliverCompatBizWidget>
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).viewPadding);
     return Scaffold(
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(
-                pinned: true,
-                delegate: CustomSliverPersistentHeaderDelegate(
-                  maxExtent: 200,
-                  minExtent: MediaQuery.of(context).viewPadding.top,
-                  child: AppBar(
-                    title: const Text("SliverAppBar"),
-                  ),
-                )),
-
-            /// Tab
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: CustomSliverPersistentHeaderDelegate(
-                  maxExtent: 48,
-                  minExtent: 48,
-                  child: ColoredBox(
-                    color: Colors.white,
-                    child: TabBar(
-                      controller: _tabController,
-                      tabs: _implementTabs(),
-                      unselectedLabelColor: Colors.black,
-                      labelColor: Colors.blue,
+        child: MultiSliverCompatWidget(childBuilder:
+            (BuildContext buildContext, SliverCompat sliverCompat) {
+          return CustomScrollView(
+            controller: sliverCompat.generateMajorController(),
+            slivers: [
+              SliverPersistentHeader(
+                  pinned: true,
+                  delegate: CustomSliverPersistentHeaderDelegate(
+                    maxExtent: 200,
+                    minExtent: MediaQuery.of(context).viewPadding.top,
+                    child: AppBar(
+                      title: const Text("SliverAppBar"),
                     ),
                   )),
-            ),
 
-            /// Tab body
-            SliverFillRemaining(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  _generateGoodsPage(),
-                  _generateRatingPage(),
-                  _generateStorePage(),
-                ],
+              /// Tab
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: CustomSliverPersistentHeaderDelegate(
+                    maxExtent: 48,
+                    minExtent: 48,
+                    child: ColoredBox(
+                      color: Colors.white,
+                      child: TabBar(
+                        controller: _tabController,
+                        tabs: _implementTabs(),
+                        unselectedLabelColor: Colors.black,
+                        labelColor: Colors.blue,
+                      ),
+                    )),
               ),
-            )
-          ],
-        ),
+
+              /// Tab body
+              SliverFillRemaining(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    _generateGoodsPage(),
+                    _generateRatingPage(),
+                    _generateStorePage(),
+                  ],
+                ),
+              )
+            ],
+          );
+        }),
       ),
     );
   }
