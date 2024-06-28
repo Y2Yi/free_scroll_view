@@ -44,47 +44,45 @@ class _SliverCompatBizWidgetState extends State<SliverCompatBizWidget>
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(
-                pinned: true,
-                delegate: CustomSliverPersistentHeaderDelegate(
-                  maxExtent: 200,
-                  minExtent: MediaQuery.of(context).viewPadding.top,
-                  child: AppBar(
-                    title: const Text("SliverAppBar"),
-                  ),
-                )),
-
-            /// Tab
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: CustomSliverPersistentHeaderDelegate(
-                  maxExtent: 48,
-                  minExtent: 48,
-                  child: ColoredBox(
-                    color: Colors.white,
-                    child: TabBar(
-                      controller: _tabController,
-                      tabs: _implementTabs(),
-                      unselectedLabelColor: Colors.black,
-                      labelColor: Colors.blue,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverPersistentHeader(
+                  pinned: true,
+                  delegate: CustomSliverPersistentHeaderDelegate(
+                    maxExtent: 200,
+                    minExtent: MediaQuery.of(context).viewPadding.top,
+                    child: AppBar(
+                      title: const Text("SliverAppBar"),
                     ),
                   )),
-            ),
 
-            /// Tab body
-            SliverFillRemaining(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  _generateGoodsPage(),
-                  _generateRatingPage(),
-                  _generateStorePage(),
-                ],
+              /// Tab
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: CustomSliverPersistentHeaderDelegate(
+                    maxExtent: 48,
+                    minExtent: 48,
+                    child: ColoredBox(
+                      color: Colors.white,
+                      child: TabBar(
+                        controller: _tabController,
+                        tabs: _implementTabs(),
+                        unselectedLabelColor: Colors.black,
+                        labelColor: Colors.blue,
+                      ),
+                    )),
               ),
-            )
-          ],
+            ];
+          },
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              _generateGoodsPage(),
+              _generateRatingPage(),
+              _generateStorePage(),
+            ],
+          ),
         ),
       ),
     );
