@@ -25,12 +25,12 @@ class GoodsFragment extends StatelessWidget {
           flex: 1,
           child: ListView(
             children: [
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
+              _buildMenu(64),
+              _buildMenu(64),
+              _buildMenu(64),
+              _buildMenu(64),
+              _buildMenu(64),
+              _buildMenu(64),
             ],
           ),
         ),
@@ -38,16 +38,16 @@ class GoodsFragment extends StatelessWidget {
           flex: 3,
           child: ListView(
             children: [
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
-              _buildMenu(),
+              _buildMenu(96),
+              _buildMenu(96),
+              _buildMenu(96),
+              _buildMenu(96),
+              _buildMenu(96),
+              _buildMenu(96),
+              _buildMenu(96),
+              _buildMenu(96),
+              _buildMenu(96),
+              _buildMenu(96),
             ],
           ),
         )
@@ -55,14 +55,15 @@ class GoodsFragment extends StatelessWidget {
     );
   }
 
-  Widget _buildMenu() {
+  Widget _buildMenu(double h) {
     return Container(
-      height: 128,
+      height: h,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black),
         color: Color.fromARGB(55, Random().nextInt(255), Random().nextInt(255),
             Random().nextInt(255)),
       ),
+      alignment: Alignment.center,
       child: Text("${Random().nextInt(255)}"),
     );
   }

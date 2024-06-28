@@ -47,14 +47,14 @@ class _SliverCompatBizWidgetState extends State<SliverCompatBizWidget>
         child: CustomScrollView(
           slivers: [
             SliverPersistentHeader(
-              pinned: true,
+                pinned: true,
                 delegate: CustomSliverPersistentHeaderDelegate(
-              maxExtent: 200,
-              minExtent: MediaQuery.of(context).viewPadding.top,
-              child: AppBar(
-                title: const Text("SliverAppBar"),
-              ),
-            )),
+                  maxExtent: 200,
+                  minExtent: MediaQuery.of(context).viewPadding.top,
+                  child: AppBar(
+                    title: const Text("SliverAppBar"),
+                  ),
+                )),
 
             /// Tab
             SliverPersistentHeader(
@@ -109,8 +109,11 @@ class _SliverCompatBizWidgetState extends State<SliverCompatBizWidget>
           SizedBox(
             height: 120,
             width: double.infinity,
-            child: FittedBox(
-              child: Text("广告视图"),
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: FittedBox(
+                child: Text("广告视图"),
+              ),
             ),
           ),
           Expanded(child: GoodsFragment()),
