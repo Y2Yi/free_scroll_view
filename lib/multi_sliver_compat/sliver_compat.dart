@@ -62,12 +62,32 @@ class SliverCompat {
   // 接收child提交的滚动量
   void submitUserOffset(
       MultiSliverCompatScrollPosition submitter, double delta) {
-    double remaining = (_majorScrollController!.position as MajorScrollPosition)
-        .applyClampedDragUpdate(delta);
-    print('remaining:$remaining');
+    if (delta < 0) {
+      onScrollToTop(submitter, delta);
+    } else {
+      onScrollToBottom(submitter, delta);
+    }
+  }
+
+  MultiSliverCompatScrollPosition get _majorScrollPosition =>
+      (_majorScrollController!.position as MajorScrollPosition);
+
+  void onScrollToTop(MultiSliverCompatScrollPosition submitter, double delta) {
+    double remaining = _majorScrollPosition.applyClampedDragUpdate(delta);
+    print('ToTop remaining:$remaining');
     if (remaining != 0) {
       remaining = submitter.applyClampedDragUpdate(remaining);
     }
-    print('overflow:$remaining');
+    print('ToTop overflow:$remaining');
+  }
+
+  void onScrollToBottom(
+      MultiSliverCompatScrollPosition submitter, double delta) {
+    double remaining = submitter.applyClampedDragUpdate(delta);
+    print('ToBottom remaining:$remaining');
+    if (remaining != 0) {
+      remaining = _majorScrollPosition.applyClampedDragUpdate(remaining);
+    }
+    print('ToBottom overflow:$remaining');
   }
 }
