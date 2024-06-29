@@ -66,7 +66,7 @@ class _SliverCompatBizWidgetState extends State<SliverCompatBizWidget>
                     maxExtent: 48,
                     minExtent: 48,
                     child: ColoredBox(
-                      color: Colors.white,
+                      color: Color(0xAAFFFFFF),
                       child: TabBar(
                         controller: _tabController,
                         tabs: _implementTabs(),

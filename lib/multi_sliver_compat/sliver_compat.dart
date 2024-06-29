@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,13 +39,13 @@ class _MultiSliverCompatWidgetState extends State<MultiSliverCompatWidget> {
 }
 
 class SliverCompat {
-  ShameScrollController? _majorScrollController;
+  MultiSliverCompatScrollController? _majorScrollController;
 
-  final HashMap<Key, ShameScrollController> _scrollPool = HashMap();
+  final HashMap<Key, MultiSliverCompatScrollController> _scrollPool = HashMap();
 
   ScrollController generateMajorController() {
     _majorScrollController ??=
-        ShameScrollController(this, debugKey: const Key("Major"));
+        MultiSliverCompatScrollController.major(const Key("Major"), this);
     return _majorScrollController!;
   }
 
@@ -52,9 +53,21 @@ class SliverCompat {
     if (_scrollPool[tag] != null) {
       return _scrollPool[tag]!;
     }
-    ShameScrollController newController =
-        ShameScrollController(this, debugKey: tag);
+    MultiSliverCompatScrollController newController =
+        MultiSliverCompatScrollController.minor(tag, this);
     _scrollPool[tag] = newController;
     return newController;
+  }
+
+  // 接收child提交的滚动量
+  void submitUserOffset(
+      MultiSliverCompatScrollPosition submitter, double delta) {
+    double remaining = (_majorScrollController!.position as MajorScrollPosition)
+        .applyClampedDragUpdate(delta);
+    print('remaining:$remaining');
+    if (remaining != 0) {
+      remaining = submitter.applyClampedDragUpdate(remaining);
+    }
+    print('overflow:$remaining');
   }
 }
