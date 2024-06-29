@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:free_scroll_compat/multi_sliver_compat/sliver_compat.dart';
 import 'dart:math';
+
 class MultiSliverCompatScrollController extends ScrollController {
   Key? debugKey;
   SliverCompat sliverCompat;
@@ -44,19 +45,20 @@ class MultiSliverCompatScrollPosition extends ScrollPositionWithSingleContext {
   /// 所有的偏移量统一交给SliverCompat去处理；
   @override
   void applyUserOffset(double delta) {
+    print("$debugKey notifyScroll");
     sliverCompat.submitUserOffset(this, delta);
   }
-
 
   /// 食用滚动量，然后返回未吃完的滚动量
   double applyClampedDragUpdate(double delta) {
     assert(delta != 0.0);
-    final double minValue = delta < 0.0
-        ? -double.infinity
-        : min(minScrollExtent, pixels);
+    final double minValue =
+        delta < 0.0 ? -double.infinity : min(minScrollExtent, pixels);
     final double maxValue = delta > 0.0
         ? double.infinity
-        : pixels < 0.0 ? 0.0 : max(maxScrollExtent, pixels);
+        : pixels < 0.0
+            ? 0.0
+            : max(maxScrollExtent, pixels);
     final double oldPixels = pixels;
     final double newPixels = clampDouble(pixels - delta, minValue, maxValue);
     final double clampedDelta = newPixels - pixels;

@@ -44,8 +44,9 @@ class _SliverCompatBizWidgetState extends State<SliverCompatBizWidget>
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child: MultiSliverCompatWidget(childBuilder:
-            (BuildContext buildContext, SliverCompat sliverCompat) {
+        child:
+            MultiSliverCompatWidget.asRoot(debugKey: Key("Top DebugKey"),
+                (BuildContext buildContext, SliverCompat sliverCompat) {
           return CustomScrollView(
             controller: sliverCompat.generateMajorController(),
             slivers: [
@@ -108,20 +109,22 @@ class _SliverCompatBizWidgetState extends State<SliverCompatBizWidget>
     ];
   }
 
-  _generateGoodsPage() => Column(
-        children: [
-          SizedBox(
-            height: 120,
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: FittedBox(
-                child: Text("广告视图"),
+  _generateGoodsPage() => MultiSliverCompatWidget.asCommon(
+        (ctx, sliverCompat) => CustomScrollView(
+          controller: sliverCompat.generateMajorController(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: FittedBox(
+                  child: Text("广告视图"),
+                ),
               ),
             ),
-          ),
-          Expanded(child: GoodsFragment()),
-        ],
+            SliverFillRemaining(child: GoodsFragment()),
+          ],
+        ),
+        debugKey: Key("Middleware DebugKey"),
       );
 
   _generateRatingPage() => RatingFragment();
