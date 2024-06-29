@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:free_scroll_compat/multi_sliver_compat/sliver_compat.dart';
 import 'package:free_scroll_compat/sliver_persistent_header_delegate.dart';
 
-import 'fragments.dart';
+import 'fragments/rating_fragment.dart';
+import 'fragments/goods_fragment.dart';
+import 'fragments/store_fragment.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,9 +46,8 @@ class _SliverCompatBizWidgetState extends State<SliverCompatBizWidget>
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child:
-            MultiSliverCompatWidget.asRoot(debugKey: Key("Top DebugKey"),
-                (BuildContext buildContext, SliverCompat sliverCompat) {
+        child: MultiSliverCompatWidget.asRoot(debugKey: Key("Top DebugKey"),
+            (BuildContext buildContext, SliverCompat sliverCompat) {
           return CustomScrollView(
             controller: sliverCompat.generateMajorController(),
             slivers: [
@@ -56,6 +57,7 @@ class _SliverCompatBizWidgetState extends State<SliverCompatBizWidget>
                     maxExtent: 200,
                     minExtent: MediaQuery.of(context).viewPadding.top,
                     child: AppBar(
+                      backgroundColor: Color(0xaa3296fa),
                       title: const Text("SliverAppBar"),
                     ),
                   )),
